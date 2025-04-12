@@ -1,0 +1,486 @@
+#+LANGUAGE: es
+#+OPTIONS: toc:nil title:nil
+
+#+LATEX_CLASS_OPTIONS: [titlepage,a4paper]
+#+LATEX_HEADER_EXTRA: \hypersetup{colorlinks=true,linkcolor=black,urlcolor=blue,bookmarksopen=true}
+#+LATEX_HEADER_EXTRA: \usepackage{a4wide}
+#+LATEX_HEADER_EXTRA: \usepackage{bookmark}
+#+LATEX_HEADER_EXTRA: \usepackage{fancyhdr}
+#+LATEX_HEADER_EXTRA: \usepackage[spanish]{babel}
+#+LATEX_HEADER_EXTRA: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER_EXTRA: \usepackage[T1]{fontenc}
+#+LATEX_HEADER_EXTRA: \usepackage{graphicx}
+#+LATEX_HEADER_EXTRA: \usepackage{float}
+#+LATEX_HEADER_EXTRA: \usepackage{minted}
+#+LATEX_HEADER_EXTRA: \usepackage{svg}
+#+LATEX_HEADER_EXTRA: \pagestyle{fancy}
+#+LATEX_HEADER_EXTRA: \fancyhf{}
+#+LATEX_HEADER_EXTRA: \fancyhead[L]{TP1 - Grupo 7}
+#+LATEX_HEADER_EXTRA: \fancyhead[R]{Ingenieria de Software I - FIUBA}
+#+LATEX_HEADER_EXTRA: \renewcommand{\headrulewidth}{0.4pt}
+#+LATEX_HEADER_EXTRA: \fancyfoot[C]{\thepage}
+#+LATEX_HEADER_EXTRA: \renewcommand{\footrulewidth}{0.4pt}
+#+LATEX_HEADER_EXTRA: \usemintedstyle{stata-light}
+#+LATEX_HEADER_EXTRA: \newminted{c}{bgcolor={rgb}{0.95,0.95,0.95}}
+#+LATEX_HEADER_EXTRA: \usepackage{color}
+#+LATEX_HEADER_EXTRA: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER_EXTRA: \usepackage{fancyvrb}
+#+LATEX_HEADER_EXTRA: \fvset{framesep=1mm,fontfamily=courier,fontsize=\scriptsize,numbers=left,framerule=.3mm,numbersep=1mm}
+#+LATEX_HEADER_EXTRA: \usepackage[nottoc]{tocbibind}
+
+#+NAME: setup
+#+BEGIN_SRC emacs-lisp :results silent :exports none
+  (setq org-latex-minted-options
+    '(("bgcolor" "bg")))
+#+END_SRC
+
+#+BEGIN_EXPORT latex
+\begin{titlepage}
+    \hfill\includegraphics[width=6cm]{assets/logofiuba.jpg}
+    \centering
+    \vfill
+    \Huge \textbf{Trabajo Práctico 1}
+    \vskip2cm
+    \Large [TA046] Ingenieria de Software I \\
+    Primer cuatrimestre de 2025\\
+    \vfill
+    \begin{tabular}{ | l | l | l | }
+      \hline
+      Alumno & Padron \\ \hline
+      CONDE, Brian Agustín & 110953 \\ \hline
+      DEALBERA, Pablo Andres & 106585 \\ \hline
+      MAZZUCCO, Guido & 111310 \\ \hline
+      SET, Santiago & 108395 \\ \hline
+      SLAVKIS, José Uriel & 111365 \\ \hline
+      TOSI, Marco & 107237 \\ \hline
+    \end{tabular}
+    \vfill
+\end{titlepage}
+\tableofcontents
+\newpage
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
+#+END_EXPORT
+
+* 1. Descubrimiento del problema (Product Discovery)
+
+** a) Formulación de la hipótesis inicial del problema
+   - HIPÓTESIS:
+     1. Hipótesis 1
+        Si permitimos a los jugadores unirse a partidos abiertos sin necesidad de un equipo fijo, aumentará la participación de jugadores espontáneos y se completarán más partidos.
+     2. Hipótesis 2
+        Si centralizamos la gestión de reservas y visibilidad de disponibilidad horaria en una única plataforma, se reducirán los solapamientos y aumentará la eficiencia en el uso de las canchas.
+     3. Hipótesis 3
+        Si facilitamos la comunicación entre jugadores, organizadores y dueños de canchas mediante notificaciones y confirmaciones integradas, mejorará la experiencia organizativa y disminuirán las ausencias no justificadas.
+
+** b) Investigación y entrevistas a usuarios
+
+*** Entrevista a Jugador Recreativo (Carlos, 35 años)
+    - **Contexto:**
+      Juega fútbol 5 una vez por semana, los domingos. No tiene equipo fijo y depende de grupos informales. Tiene trabajo durante la semana, por lo que solo puede jugar una vez a la semana.
+    - **Preguntas y respuestas:**
+      - **Pregunta:** ¿Cómo organizas tus partidos actualmente?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Usamos un grupo de WhatsApp donde alguien avisa si hay partido. A veces se anotan 5, a veces 3, y al final se cancela. También he usado Instagram para buscar equipos que necesiten jugadores."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué es lo más frustrante de organizar o unirte a un partido?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Que no hay certeza. A veces llego a la cancha y falta gente, o la cancha ya está ocupada. También pasa que algunos no pagan y terminamos cubriendo su parte."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué funcionalidad te gustaría en una app para solucionar esto?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Algo que muestre partidos confirmados, con jugadores ya anotados, y que se pague por adelantado. Y que avise si hay cambios."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué tan familiarizado te encuentras con el uso de tecnología?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          “Bueno depende para qué, pero creo que me manejo bastante bien.”
+          #+END_QUOTE
+
+*** Entrevista a Administrador (Ana, 35 años)
+    - **Preguntas y respuestas:**
+      - **Pregunta:** ¿Cómo gestionas los equipos y horarios?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Llevo todo en Excel y WhatsApp. Los equipos me mandan listas, pero a veces cambian jugadores a última hora y es un lío."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué problemas enfrentan frecuentemente?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Coordinar los pagos es un infierno. Algunos pagan tarde, otros no. Además, si un equipo no llega, desordena toda la planificación."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué herramienta te ayudaría?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Un sistema donde los equipos se inscriban solos, paguen en línea, y yo pueda armar la tabla de partidos automáticamente."
+          #+END_QUOTE
+
+*** Entrevista a Organizador de Torneos (Javier, 33 años)
+    - **Preguntas y respuestas:**
+      - **Pregunta:** ¿Cómo manejas actualmente las inscripciones de los equipos?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Por WhatsApp y una planilla de Excel que comparto. Los capitanes me mandan los datos, pero siempre hay equipos que dicen que van a jugar y al final no pagan o no se presentan."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué problemas te genera el sistema de pagos actual?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Es un caos. El 70% paga en efectivo y tengo que estar persiguiéndolos. A veces llega el día del partido y faltan pagos. Además, algunos pagan solo una parte y después 'se olvidan' de completar."
+          #+END_QUOTE
+      - **Pregunta:** ¿Cómo armas los fixtures y manejas los cambios?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Los hago manualmente en Excel. Si un equipo falta, tengo que rearmar todo y avisar por WhatsApp. A veces los equipos ni enterados... y llegan a horarios equivocados."
+          #+END_QUOTE
+      - **Pregunta:** ¿Cómo registras los resultados y estadísticas?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Anoto en una libreta y luego lo paso a Excel. Pero a veces los equipos discuten los resultados o no me entregan las planillas. Perdemos mucho tiempo en eso."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué funcionalidad clave te gustaría en una plataforma?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Algo que:
+          - Obligue a pagar para inscribirse.
+          - Genere el fixture solo y se actualice si alguien falta.
+          - Donde los capitanes carguen los resultados y se vean las tablas en vivo."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué haces con los equipos problemáticos (ej.: no pagan, no avisan)?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "¡Que los sancione la app! Multas automáticas o que no puedan inscribirse al próximo torneo hasta pagar. Ahora todo depende de mí y es agotador."
+          #+END_QUOTE
+
+*** Entrevista a Dueño de Cancha de Fútbol 5 (Ricardo, 40 años)
+    - **Preguntas y respuestas:**
+      - **Pregunta:** ¿Cómo manejas actualmente las reservas de tus canchas?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Todo es por teléfono o WhatsApp. Los clientes me escriben para preguntar disponibilidad y yo anoto en una libreta. A veces se me cruzan los horarios o doble reserva sin querer."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué problemas enfrenta con este sistema manual?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Muchos clientes reservan y no vienen. No les cobro adelantado, así que pierdo ese ingreso. También pasa que llegan equipos sin reserva y quieren jugar, pero como no está anotado, tengo que decirles que no."
+          #+END_QUOTE
+      - **Pregunta:** ¿Cómo gestionas los pagos?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Solo acepto efectivo. Algunos pagan completo, otros pagan después... y a veces 'se olvidan’."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué haces cuando necesitas cerrar la cancha por mantenimiento?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Llamo o escribo uno por uno a los clientes afectados. A veces no me contestan y llegan en vano, se enojan... Es un lío."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué funcionalidades te gustaría en un sistema de reservas?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Quisiera:
+          - Un calendario online donde los clientes vean horarios libres y reserven ellos mismos.
+          - Pagos por adelantado para asegurar la reserva.
+          - Alertas automáticas si cierro la cancha (que no dependa de mí avisar a cada uno)."
+          #+END_QUOTE
+      - **Pregunta:** ¿Te interesaría ver estadísticas de uso de tus canchas?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "¡Claro! Saber qué días y horarios son los más rentables, cuánto ingreso pierdo por cancelaciones... Ahora eso no lo tengo."
+          #+END_QUOTE
+      - **Pregunta:** ¿Cómo te llevas con la tecnología?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          “Me arreglo, no soy experto pero una aplicación interactiva me gustaría. Eso de tener que aprender cosas muy complejas sobre tecnología desde 0 no es para mí.”
+          #+END_QUOTE
+
+*** Segunda Ronda de entrevistas
+
+**** Entrevista a Jugador Recreativo (Laura, 25 años)
+    - **Contexto:**
+      Juega fútbol 5 dos veces al mes según disponibilidad. Se suma a partidos abiertos cuando tiene tiempo libre y le gusta despejarse.
+    - **Preguntas y respuestas:**
+      - **Pregunta:** ¿Cómo organizas tus partidos actualmente?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Me metí a un grupo en Telegram donde publican partidos abiertos. Si veo uno cerca y a buen horario, me anoto. A veces ni conozco a los otros jugadores."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué es lo más frustrante de organizar o unirte a un partido?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Que a veces me anoto y el partido se cancela a último momento. O se anotan 15 personas y termina siendo un quilombo. También me pasó que la cancha estaba en mal estado y nadie lo dijo."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué funcionalidad te gustaría en una app para solucionar esto?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Una especie de 'mercado de partidos' donde vea partidos confirmados, quiénes van, si hay lugar, si ya pagaron, y opiniones de otros sobre la cancha."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué tan familiarizada te encuentras con el uso de tecnología?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          “Tengo buen manejo, uso Telegram asique imaginate que ya manejo bien todo lo que es tecnología.”
+          #+END_QUOTE
+
+**** Entrevista a Organizador de Equipo (Javier, 33 años)
+    - **Contexto:**
+      Capitán de un equipo que juega torneos los sábados. Se encarga de la organización del grupo, inscripciones y logística.
+    - **Preguntas y respuestas:**
+      - **Pregunta:** ¿Cómo organizás los partidos o torneos con tu equipo?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Tenemos un grupo de WhatsApp. Yo paso la info del torneo, cobro la inscripción y me encargo de reservar la cancha para los entrenamientos. También reservo árbitros cuando es necesario."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué te complica más de ese rol?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Juntar la guita. Siempre hay alguno que se atrasa o se olvida. También coordinar los horarios es un lío, y ni hablar si tenemos que cambiar de cancha a último momento."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué funcionalidad te gustaría tener en una app?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Una función para cobrar automáticamente a los jugadores, ver canchas disponibles por fecha y hora, y armar equipos de forma rápida. También tener estadísticas del equipo y alertas si alguien no confirma asistencia."
+          #+END_QUOTE
+
+**** Entrevista a Dueña de Cancha de Fútbol 5 (Mariana, 45 años)
+    - **Contexto:**
+      Administra 3 canchas en zona oeste. Utiliza Excel y WhatsApp para agendar turnos.
+    - **Preguntas y respuestas:**
+      - **Pregunta:** ¿Cómo manejás las reservas actualmente?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "La mayoría me escriben por WhatsApp. Algunos llaman. Anoto todo en un Excel, pero a veces hay solapamientos o me olvido de confirmar."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué es lo más difícil de gestionar?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Las cancelaciones de último momento. Si alguien no viene y no avisa, pierdo ese turno. También coordinar los pagos, porque algunos vienen y no pagan o me piden fiado."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué herramienta te ayudaría en tu trabajo?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Una aplicación donde los jugadores reserven y paguen directamente. Que me avise si se libera un turno, y que permita a los equipos encontrar huecos en mi agenda. También poder enviar mensajes masivos a los contactos para promociones."
+          #+END_QUOTE
+
+**** Entrevista a Organizador de Torneos (Tomás, 29 años)
+    - **Contexto:**
+      Organiza torneos de fútbol 5 y 7 los fines de semana. Utiliza Google Sheets e Instagram.
+    - **Preguntas y respuestas:**
+      - **Pregunta:** ¿Cómo organizás un torneo actualmente?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Primero lanzo la convocatoria por redes. Después voy anotando equipos en una planilla, cobro por transferencia, armo los fixtures a mano y uso grupos de WhatsApp para pasar info a los capitanes."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué te complica más del proceso?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Confirmar quién pagó, cambiar horarios por mal clima o por superposición de partidos, y que los equipos estén informados sin tener que repetir lo mismo 10 veces."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué funcionalidad valoras en una plataforma digital?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Gestión de inscripciones con pago incluido, generación automática de fixture, avisos a los equipos en tiempo real y un espacio donde puedan ver tabla de posiciones y goleadores."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué dificultades enfrentas en este trabajo?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Yyy a veces no sé si me voy a encontrar con la cancha en buen estado, si se suspende el partido tengo que andar avisando uno por uno. También a veces el boca en boca no es suficiente para generar la difusión que me gustaría a estos torneos, y ni hablemos de tener que ir “corriendo” a la gente que no paga su inscripción."
+          #+END_QUOTE
+
+**** Entrevista a Organizador de Torneos (Romina, 38 años)
+    - **Contexto:**
+      Organiza torneos mixtos y femeninos en CABA. Empezó como hobby y hoy gestiona varios torneos por mes. Utiliza formularios de Google, Excel, Instagram y TikTok; cobra por MercadoPago o efectivo.
+    - **Preguntas y respuestas:**
+      - **Pregunta:** ¿Cómo organizás los torneos actualmente?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Tengo un formulario de Google para que los equipos se anoten, y después voy armando todo en un Excel. Uso Instagram y TikTok para la difusión, porque me siguen muchas jugadoras ahí. Cobro por MercadoPago o efectivo, y después armo los fixtures a mano."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué es lo más complicado de organizar un torneo?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "El ida y vuelta con los equipos. Algunos se bajan a último momento, otros no leen bien las reglas. También me cuesta coordinar árbitros y asegurar que la cancha esté en condiciones. A veces el dueño de la cancha me cancela y tengo que rearmar todo."
+          #+END_QUOTE
+      - **Pregunta:** ¿Qué funcionalidades te gustaría que tenga una app o plataforma?
+        - **Respuesta:**
+          #+BEGIN_QUOTE
+          "Que los equipos puedan ver todo desde un solo lugar: el fixture, resultados, tabla de posiciones, y las reglas del torneo. También me serviría automatizar las notificaciones (tipo cambio de horario o clima) y gestionar los pagos desde ahí. Y sería ideal tener una base de datos de árbitros y canchas para elegir más fácil."
+          #+END_QUOTE
+
+** c) Identificación de necesidades según cada ente (resumen de entrevistas)
+
+*** Jugador Recreativo
+    - **Molestias:**
+      - Incertidumbre sobre si el partido se jugará.
+      - Desconocimiento de la cantidad de jugadores anotados.
+      - Dudas sobre si todos los jugadores han pagado.
+      - Incertidumbre respecto a cambios de último minuto.
+    - **Motivación:**
+      - Poder decidir si unirse o darse de baja según el estado del partido.
+    - **Comportamiento:**
+      - Se inscribe en partidos abiertos o se retira en función de la información disponible.
+
+*** Organizador de Partidos
+    - **Molestias:**
+      - Incertidumbre sobre la asistencia de jugadores.
+      - Dificultades para coordinar horarios.
+      - Problemas para juntar el dinero y gestionar cambios de último minuto.
+    - **Motivación:**
+      - Organizar equipos y partidos con mayor certeza.
+    - **Comportamiento:**
+      - Recolecta información, cobra inscripciones y reserva cancha para partidos o entrenamientos.
+
+*** Organizador de Torneos
+    - **Molestias:**
+      - Confirmar quién pagó.
+      - Gestionar notificaciones de cambios (mal clima, solapamientos, etc.).
+      - Coordinar equipos, árbitros y estado de la cancha.
+      - Problemas de difusión y comunicación.
+    - **Motivación:**
+      - Coordinar un torneo con inscripción previa, pagos automáticos y comunicación centralizada.
+    - **Comportamiento:**
+      - Publica en redes, cobra inscripciones y organiza manualmente equipos y fixtures.
+
+*** Dueño de Cancha / Administrador de Cancha
+    - **Molestias:**
+      - Incertidumbre sobre la confirmación de partidos.
+      - Dificultades en confirmar anotaciones y pagos.
+      - Solapamientos y cancelaciones de último minuto.
+      - Gestión dispersa (uso de varias herramientas: WhatsApp, llamadas, Excel).
+    - **Motivación:**
+      - Implementar un sistema de reservas y pagos que minimice la carga administrativa.
+      - Obtener visibilidad en tiempo real de la disponibilidad de turnos.
+      - Optimizar la comunicación con los clientes.
+    - **Comportamiento:**
+      - Publica convocatorias, gestiona reservas y pagos manualmente, y actúa como puente entre canchas, árbitros y jugadores.
+
+** d) Adjuntar fotos
+   - Se sugiere agregar imágenes o ilustraciones que respalden la información de entrevistas, mapas de empatía y user personas.
+
+* 2. Síntesis del problema
+
+** a) Declaraciones del problema desde la perspectiva de los usuarios
+   - **Jugador Recreativo:**
+     “No tengo seguridad de si el partido al que me anoto se va a jugar o no, quién va, si ya pagaron, ni si la cancha está en condiciones.”
+     “Termino perdiendo tiempo cuando los partidos se cancelan o no se presentan los jugadores.”
+   - **Administrador:**
+     “Se pierde mucho tiempo organizando pagos y confirmando asistencia. Y si alguien no viene, me desorganiza todo.”
+     “Toda la gestión depende de mí y no tengo herramientas que automaticen nada.”
+   - **Organizador de Torneos:**
+     “Me cuesta mucho coordinar a todos los equipos, árbitros, canchas, y mantenerlos informados. Si algo cambia, tengo que comunicarlo a mano uno por uno.”
+     “Los equipos se bajan sin pagar o no leen bien las reglas. Necesito una forma de ordenar todo y sancionar al que no cumple. Algo que logre centralizar todo mi trabajo en un mismo sitio.”
+   - **Dueño de Cancha:**
+     “Gestiono todo a mano y me genera muchos errores, reservas dobles o cancelaciones de último minuto sin aviso.”
+     “Pierdo ingresos cuando los clientes no se presentan o no pagan. No tengo forma de automatizar avisos o estadísticas de uso.”
+   - **Organizador de Equipos/Partidos:**
+     “El principal problema es juntar el dinero para poder anotar al equipo. No encuentro un sistema centralizado donde conseguir árbitros, o para chequear quiénes pagaron y no pasar vergüenza al llegar a la cancha.”
+
+** b) Oportunidades de mejora o funcionalidades clave
+
+*** Para jugadores recreativos
+    - Acceso a partidos confirmados con información sobre cupos y estado de pagos.
+    - Posibilidad de pagar por adelantado y recibir notificaciones automáticas.
+    - Ver opiniones y reputación sobre canchas y partidos.
+    - Filtros por ubicación, horario y tipo de partido.
+
+*** Para organizadores de equipos o partidos
+    - Herramienta para cobrar automáticamente a los jugadores y confirmar asistencia.
+    - Gestión de reservas con disponibilidad visible en tiempo real.
+    - Alertas sobre cambios en el partido o estado del equipo.
+
+*** Para organizadores de torneos
+    - Plataforma de inscripción con integración de pagos.
+    - Generación automática de fixtures y actualización en caso de cambios.
+    - Espacio para visualizar resultados, tablas, goleadores y reglas.
+    - Sistema de sanciones automático ante ausencias o impagos.
+    - Base de datos de árbitros y canchas disponibles.
+
+*** Para dueños de cancha
+    - Calendario online interactivo con horarios disponibles en tiempo real.
+    - Reservas con pago anticipado obligatorio.
+    - Notificaciones automatizadas (cambios, cierre por mantenimiento, promociones).
+    - Visualización de estadísticas de uso, cancelaciones y rendimiento económico.
+
+*** Para administradores
+    - Plataforma que supervise los pagos de cada jornada.
+    - Plazos máximos para confirmación de partidos o su cancelación.
+    - Planillas de inscripción integradas para mejorar la organización.
+
+* 3. Historias de usuario y Backlog
+
+** Historias de usuario (15 ejemplos)
+   - Como jugador recreativo, quiero ver en la app los partidos confirmados y su estado de pago para saber si debo presentarme.
+   - Como jugador recreativo, quiero poder pagar mi inscripción por adelantado para evitar cancelaciones.
+   - Como jugador recreativo, quiero ver opiniones de otros usuarios sobre las canchas para elegir la mejor opción.
+   - Como organizador de partidos, quiero una herramienta para cobrar automáticamente y confirmar asistencia.
+   - Como organizador de partidos, quiero gestionar la reserva de canchas y ver la disponibilidad en tiempo real.
+   - Como organizador de partidos, quiero recibir notificaciones en caso de cambios o cancelaciones.
+   - Como organizador de torneos, quiero inscribir equipos con pago integrado para evitar problemas en el día del torneo.
+   - Como organizador de torneos, quiero que la plataforma genere automáticamente los fixtures.
+   - Como organizador de torneos, quiero actualizar en vivo el fixture si falta algún equipo.
+   - Como organizador de torneos, quiero un módulo para ingresar resultados y estadísticas en tiempo real.
+   - Como organizador de torneos, quiero un sistema de sanciones automático para equipos que no cumplan con pagos o asistencia.
+   - Como dueño de cancha, quiero un calendario online para gestionar reservas y evitar solapamientos.
+   - Como dueño de cancha, quiero recibir pagos por adelantado para asegurar la reserva.
+   - Como dueño de cancha, quiero que la app envíe notificaciones automatizadas sobre cierres o cambios de horarios.
+   - Como dueño de cancha, quiero visualizar estadísticas de uso y rendimiento económico de mi cancha.
+
+** Backlog inicial de producto (agrupado por épicas)
+
+*** Épica: Gestión de Reservas y Pagos
+    - Historia 1: Ver partidos confirmados y estado de pago (jugador recreativo)
+    - Historia 2: Pago anticipado para reserva (dueño de cancha)
+    - Historia 3: Gestión en tiempo real de disponibilidad de canchas
+
+*** Épica: Organización y Comunicación de Partidos/Torneos
+    - Historia 4: Confirmación de asistencia mediante notificaciones (administrador)
+    - Historia 5: Generación automática de fixtures (organizador de torneos)
+    - Historia 6: Actualización en vivo de fixtures (organizador de torneos)
+    - Historia 7: Integración de notificaciones para cambios de último minuto (organizador de partidos)
+    - Historia 8: Herramienta para inscribir equipos con pago integrado (organizador de torneos)
+    - Historia 9: Registro en vivo de resultados y estadísticas (organizador de torneos)
+
+*** Épica: Gestión de la Experiencia del Usuario
+    - Historia 10: Sistema de evaluación y opiniones de canchas (jugador recreativo)
+    - Historia 11: Interfaz amigable para dueños de cancha sin alta especialización tecnológica
+    - Historia 12: Centralización de reglas y estadísticas de torneos (organizador de torneos)
+
+*** Épica: Automatización y Sanciones
+    - Historia 13: Sistema automático de sanciones por impagos o ausencias (organizador de torneos)
+    - Historia 14: Automatización de notificaciones masivas (dueño de cancha y organizadores)
+    - Historia 15: Integración de alertas y recordatorios para confirmación de asistencia (administrador)
+
+** Criterios de aceptación para historias clave (ejemplo de 5 historias)
+   - *Historia 1: Ver partidos confirmados y estado de pago*
+     **Criterios de aceptación:**
+     - El usuario puede ver una lista actualizada de partidos confirmados.
+     - Se muestran los cupos disponibles y el estado de pago (pagado/no pagado) para cada partido.
+     - La interfaz se actualiza en tiempo real conforme se confirman inscripciones.
+     **Estimación:** 5 story points (mediante poker planning).
+
+   - *Historia 2: Pago anticipado para reserva*
+     **Criterios de aceptación:**
+     - El usuario tiene la opción de pagar su inscripción de manera segura por medio de la app.
+     - La reserva queda garantizada una vez recibido el pago.
+     - Se muestra una confirmación inmediata del pago y la reserva.
+     **Estimación:** 8 story points.
+
+   - *Historia 5: Generación automática de fixtures*
+     **Criterios de aceptación:**
+     - La app recibe la lista de equipos inscritos.
+     - Genera el fixture de forma automática considerando el número de equipos.
+     - Permite re-generar el fixture en caso de cambios en la inscripción.
+     **Estimación:** 13 story points.
+
+   - *Historia 8: Inscripción de equipos con pago integrado*
+     **Criterios de aceptación:**
+     - Los equipos se pueden inscribir a través de un formulario integrado en la app.
+     - Se integra el pago de inscripción en el mismo flujo.
+     - Se notifica la confirmación de inscripción al equipo y a los organizadores.
+     **Estimación:** 8 story points.
+
+   - *Historia 13: Sistema automático de sanciones*
+     **Criterios de aceptación:**
+     - Se detecta automáticamente la no asistencia o el impago de un equipo o jugador.
+     - Se activa una sanción (bloqueo de inscripción o multa).
+     - Se notifica al usuario sancionado y se actualiza su estado en la app.
+     **Estimación:** 13 story points.
