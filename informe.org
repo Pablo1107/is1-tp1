@@ -61,9 +61,9 @@
 \definecolor{bg}{rgb}{0.95,0.95,0.95}
 #+END_EXPORT
 
-* 1. Descubrimiento del problema (Product Discovery)
+* Descubrimiento del problema (Product Discovery)
 
-** a) Formulación de la hipótesis inicial del problema
+** Formulación de la hipótesis inicial del problema
    - HIPÓTESIS:
      1. Hipótesis 1
         Si permitimos a los jugadores unirse a partidos abiertos sin necesidad de un equipo fijo, aumentará la participación de jugadores espontáneos y se completarán más partidos.
@@ -72,7 +72,7 @@
      3. Hipótesis 3
         Si facilitamos la comunicación entre jugadores, organizadores y dueños de canchas mediante notificaciones y confirmaciones integradas, mejorará la experiencia organizativa y disminuirán las ausencias no justificadas.
 
-** b) Investigación y entrevistas a usuarios
+** Investigación y entrevistas a usuarios
 
 *** Entrevista a Jugador Recreativo (Carlos, 35 años)
     - **Contexto:**
@@ -306,7 +306,7 @@
           "Que los equipos puedan ver todo desde un solo lugar: el fixture, resultados, tabla de posiciones, y las reglas del torneo. También me serviría automatizar las notificaciones (tipo cambio de horario o clima) y gestionar los pagos desde ahí. Y sería ideal tener una base de datos de árbitros y canchas para elegir más fácil."
           #+END_QUOTE
 
-** c) Identificación de necesidades según cada ente (resumen de entrevistas)
+** Identificación de necesidades según cada ente (resumen de entrevistas)
 
 *** Jugador Recreativo
     - **Molestias:**
@@ -353,12 +353,21 @@
     - **Comportamiento:**
       - Publica convocatorias, gestiona reservas y pagos manualmente, y actúa como puente entre canchas, árbitros y jugadores.
 
-** d) Adjuntar fotos
-   - Se sugiere agregar imágenes o ilustraciones que respalden la información de entrevistas, mapas de empatía y user personas.
+** User Personas
 
-* 2. Síntesis del problema
+[[file:assets/juan-jugador-recreativo.jpg]]
 
-** a) Declaraciones del problema desde la perspectiva de los usuarios
+[[file:assets/ricardo-dueño-de-canchas.jpg]]
+
+** Mapas de Empatia
+
+[[file:assets/mapa-de-empatia-dueño-de-cancha.jpg]]
+
+[[file:assets/mapa-de-empatia-organizador-de-torneos.jpg]]
+
+* Síntesis del problema
+
+** Declaraciones del problema desde la perspectiva de los usuarios
    - **Jugador Recreativo:**
      “No tengo seguridad de si el partido al que me anoto se va a jugar o no, quién va, si ya pagaron, ni si la cancha está en condiciones.”
      “Termino perdiendo tiempo cuando los partidos se cancelan o no se presentan los jugadores.”
@@ -374,7 +383,7 @@
    - **Organizador de Equipos/Partidos:**
      “El principal problema es juntar el dinero para poder anotar al equipo. No encuentro un sistema centralizado donde conseguir árbitros, o para chequear quiénes pagaron y no pasar vergüenza al llegar a la cancha.”
 
-** b) Oportunidades de mejora o funcionalidades clave
+** Oportunidades de mejora o funcionalidades clave
 
 *** Para jugadores recreativos
     - Acceso a partidos confirmados con información sobre cupos y estado de pagos.
@@ -405,7 +414,7 @@
     - Plazos máximos para confirmación de partidos o su cancelación.
     - Planillas de inscripción integradas para mejorar la organización.
 
-* 3. Historias de usuario y Backlog
+* Historias de usuario y Backlog
 
 ** Historias de usuario (15 ejemplos)
    - Como jugador recreativo, quiero ver en la app los partidos confirmados y su estado de pago para saber si debo presentarme.
